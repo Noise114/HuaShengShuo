@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MobileBasicDataMapper">
+
+    <resultMap type="com.ruoyi.system.domain.huaSheng.MobileBasicData" id="MobileBasicDataResult">
+        <result property="modelId"    column="model_id"    />
+        <result property="modelName"    column="model_name"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="processorModel"    column="processor_model"    />
+        <result property="startingPrice"    column="starting_price"    />
+        <result property="testVersion"    column="test_version"    />
+        <result property="batteryCapacity"    column="battery_capacity"    />
+        <result property="screenSize"    column="screen_size"    />
+        <result property="thickness"    column="thickness"    />
+        <result property="weight"    column="weight"    />
+        <result property="chargingPower"    column="charging_power"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="creationDate"    column="creation_date"    />
+        <result property="updateDate"    column="update_date"    />
+    </resultMap>
+
+    <sql id="selectMobileBasicDataVo">
+        select model_id, model_name, release_date, processor_model, starting_price, test_version, battery_capacity, screen_size, thickness, weight, charging_power, remarks, creation_date, update_date from mobile_basic_data
+    </sql>
+
+    <select id="selectMobileBasicDataList" parameterType="com.ruoyi.system.domain.huaSheng.MobileBasicData" resultMap="MobileBasicDataResult">
+        <include refid="selectMobileBasicDataVo"/>
+        <where>
+            <if test="modelName != null  and modelName != ''"> and model_name like concat('%', #{modelName}, '%')</if>
+            <if test="releaseDate != null "> and release_date >= #{releaseDate}</if>
+            <if test="processorModel != null  and processorModel != ''"> and processor_model  like concat('%', #{modelName}, '%')</if>
+            <if test="startingPrice != null "> and starting_price = #{startingPrice}</if>
+            <if test="testVersion != null  and testVersion != ''"> and test_version = #{testVersion}</if>
+            <if test="batteryCapacity != null "> and battery_capacity >= #{batteryCapacity}</if>
+            <if test="screenSize != null "> and screen_size = #{screenSize}</if>
+            <if test="thickness != null "> and thickness = #{thickness}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="chargingPower != null "> and charging_power >= #{chargingPower}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="creationDate != null "> and creation_date = #{creationDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+        </where>
+    </select>
+
+    <select id="selectMobileBasicDataByModelId" parameterType="Long" resultMap="MobileBasicDataResult">
+        <include refid="selectMobileBasicDataVo"/>
+        where model_id = #{modelId}
+    </select>
+
+    <insert id="insertMobileBasicData" parameterType="com.ruoyi.system.domain.huaSheng.MobileBasicData" useGeneratedKeys="true" keyProperty="modelId">
+        insert into mobile_basic_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelName != null">model_name,</if>
+            <if test="releaseDate != null">release_date,</if>
+            <if test="processorModel != null">processor_model,</if>
+            <if test="startingPrice != null">starting_price,</if>
+            <if test="testVersion != null">test_version,</if>
+            <if test="batteryCapacity != null">battery_capacity,</if>
+            <if test="screenSize != null">screen_size,</if>
+            <if test="thickness != null">thickness,</if>
+            <if test="weight != null">weight,</if>
+            <if test="chargingPower != null">charging_power,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="creationDate != null">creation_date,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelName != null">#{modelName},</if>
+            <if test="releaseDate != null">#{releaseDate},</if>
+            <if test="processorModel != null">#{processorModel},</if>
+            <if test="startingPrice != null">#{startingPrice},</if>
+            <if test="testVersion != null">#{testVersion},</if>
+            <if test="batteryCapacity != null">#{batteryCapacity},</if>
+            <if test="screenSize != null">#{screenSize},</if>
+            <if test="thickness != null">#{thickness},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="chargingPower != null">#{chargingPower},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="creationDate != null">#{creationDate},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMobileBasicData" parameterType="com.ruoyi.system.domain.huaSheng.MobileBasicData">
+        update mobile_basic_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelName != null">model_name = #{modelName},</if>
+            <if test="releaseDate != null">release_date = #{releaseDate},</if>
+            <if test="processorModel != null">processor_model = #{processorModel},</if>
+            <if test="startingPrice != null">starting_price = #{startingPrice},</if>
+            <if test="testVersion != null">test_version = #{testVersion},</if>
+            <if test="batteryCapacity != null">battery_capacity = #{batteryCapacity},</if>
+            <if test="screenSize != null">screen_size = #{screenSize},</if>
+            <if test="thickness != null">thickness = #{thickness},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="chargingPower != null">charging_power = #{chargingPower},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="creationDate != null">creation_date = #{creationDate},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+        </trim>
+        where model_id = #{modelId}
+    </update>
+
+    <delete id="deleteMobileBasicDataByModelId" parameterType="Long">
+        delete from mobile_basic_data where model_id = #{modelId}
+    </delete>
+
+    <delete id="deleteMobileBasicDataByModelIds" parameterType="String">
+        delete from mobile_basic_data where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+</mapper>
