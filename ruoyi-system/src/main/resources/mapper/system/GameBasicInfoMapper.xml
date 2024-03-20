@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.GameBasicInfoMapper">
+
+    <resultMap type="com.ruoyi.system.domain.huaSheng.GameBasicInfo" id="GameBasicInfoResult">
+        <result property="gameId"    column="game_id"    />
+        <result property="gameName"    column="game_name"    />
+        <result property="creationDate"    column="creation_date"    />
+        <result property="updateDate"    column="update_date"    />
+    </resultMap>
+
+    <sql id="selectGameBasicInfoVo">
+        select game_id, game_name, creation_date, update_date from game_basic_info
+    </sql>
+
+    <select id="selectGameBasicInfoList" parameterType="com.ruoyi.system.domain.huaSheng.GameBasicInfo" resultMap="GameBasicInfoResult">
+        <include refid="selectGameBasicInfoVo"/>
+        <where>
+            <if test="gameName != null  and gameName != ''"> and game_name like concat('%', #{gameName}, '%')</if>
+            <if test="creationDate != null "> and creation_date = #{creationDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+        </where>
+    </select>
+
+    <select id="selectGameBasicInfoByGameId" parameterType="Long" resultMap="GameBasicInfoResult">
+        <include refid="selectGameBasicInfoVo"/>
+        where game_id = #{gameId}
+    </select>
+
+    <insert id="insertGameBasicInfo" parameterType="com.ruoyi.system.domain.huaSheng.GameBasicInfo">
+        insert into game_basic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gameId != null">game_id,</if>
+            <if test="gameName != null">game_name,</if>
+            <if test="creationDate != null">creation_date,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gameId != null">#{gameId},</if>
+            <if test="gameName != null">#{gameName},</if>
+            <if test="creationDate != null">#{creationDate},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+        </trim>
+    </insert>
+
+    <update id="updateGameBasicInfo" parameterType="com.ruoyi.system.domain.huaSheng.GameBasicInfo">
+        update game_basic_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gameName != null">game_name = #{gameName},</if>
+            <if test="creationDate != null">creation_date = #{creationDate},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+        </trim>
+        where game_id = #{gameId}
+    </update>
+
+    <delete id="deleteGameBasicInfoByGameId" parameterType="Long">
+        delete from game_basic_info where game_id = #{gameId}
+    </delete>
+
+    <delete id="deleteGameBasicInfoByGameIds" parameterType="String">
+        delete from game_basic_info where game_id in
+        <foreach item="gameId" collection="array" open="(" separator="," close=")">
+            #{gameId}
+        </foreach>
+    </delete>
+</mapper>
