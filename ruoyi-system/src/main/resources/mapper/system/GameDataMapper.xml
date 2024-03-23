@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.GameDataMapper">
+
+    <resultMap type="com.ruoyi.system.domain.huaSheng.GameData" id="GameDataResult">
+        <result property="id"    column="id"    />
+        <result property="modelId"    column="model_id"    />
+        <result property="gameId"    column="game_id"    />
+        <result property="modelName"    column="model_name"    />
+        <result property="gameName"    column="game_name"    />
+        <result property="frameRate"    column="frame_rate"    />
+        <result property="powerConsumption"    column="power_consumption"    />
+        <result property="frameRateImageUrl"    column="frame_rate_image_url"    />
+        <result property="temperatureFront"    column="temperature_front"    />
+        <result property="temperatureSide"    column="temperature_side"    />
+        <result property="temperatureBack"    column="temperature_back"    />
+        <result property="powerConsumptionImageUrl"    column="power_consumption_image_url"    />
+        <result property="temperatureFrontImageUrl"    column="temperature_front_image_url"    />
+        <result property="temperatureSideImageUrl"    column="temperature_side_image_url"    />
+        <result property="temperatureBackImageUrl"    column="temperature_back_image_url"    />
+        <result property="creationDate"    column="creation_date"    />
+        <result property="updateDate"    column="update_date"    />
+    </resultMap>
+
+    <sql id="selectGameDataVo">
+        select
+            t1.id,
+            t1.model_id ,
+            t1.game_id ,
+            t2.model_name ,
+            t3.game_name ,
+            t1.frame_rate ,
+            t1.power_consumption ,
+            t1.frame_rate_image_url,
+            t1.temperature_front,
+            t1.temperature_side,
+            t1.temperature_back,
+            t1.power_consumption_image_url ,
+            t1.temperature_front_image_url,
+            t1.temperature_side_image_url,
+            t1.temperature_back_image_url,
+            t1.creation_date,
+            t1.update_date
+        from game_data t1
+        left join mobile_basic_data t2 on t1.model_id = t2.model_id
+        left join game_basic_info t3 on t1.game_id = t3.game_id
+    </sql>
+
+    <select id="selectGameDataList" parameterType="com.ruoyi.system.domain.huaSheng.GameData" resultMap="GameDataResult">
+        <include refid="selectGameDataVo"/>
+        <where>
+            <if test="modelId != null "> and t1.model_id = #{modelId}</if>
+            <if test="gameId != null "> and t1.game_id = #{gameId}</if>
+            <if test="modelName != null and modelName != ''"> and t2.model_name like concat('%', #{modelName}, '%')</if>
+            <if test="gameName != null and gameName!='' "> and t3.game_name  like concat('%', #{gameName}, '%')</if>
+            <if test="frameRate != null "> and t1.frame_rate >= #{frameRate}</if>
+            <if test="powerConsumption != null "> and t1.power_consumption >= #{powerConsumption}</if>
+            <if test="temperatureFront != null "> and t1.temperature_front >= #{temperatureFront}</if>
+            <if test="temperatureSide != null "> and t1.temperature_side >= #{temperatureSide}</if>
+            <if test="temperatureBack != null "> and temperature_back >= #{temperatureBack}</if>
+            <if test="creationDate != null "> and t1.creation_date = #{creationDate}</if>
+            <if test="updateDate != null "> and t1.update_date = #{updateDate}</if>
+        </where>
+        order by t2.model_name,t3.game_name
+    </select>
+
+    <select id="selectGameDataById" parameterType="Long" resultMap="GameDataResult">
+        <include refid="selectGameDataVo"/>
+        where id = #{id}
+    </select>
+
+
+
+    <insert id="insertGameData" parameterType="com.ruoyi.system.domain.huaSheng.GameData" useGeneratedKeys="true" keyProperty="id">
+        insert into game_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelId != null">model_id,</if>
+            <if test="gameId != null">game_id,</if>
+            <if test="frameRate != null">frame_rate,</if>
+            <if test="powerConsumption != null">power_consumption,</if>
+            <if test="frameRateImageUrl != null">frame_rate_image_url,</if>
+            <if test="temperatureFront != null">temperature_front,</if>
+            <if test="temperatureSide != null">temperature_side,</if>
+            <if test="temperatureBack != null">temperature_back,</if>
+            <if test="powerConsumptionImageUrl != null">power_consumption_image_url,</if>
+            <if test="temperatureFrontImageUrl != null">temperature_front_image_url,</if>
+            <if test="temperatureSideImageUrl != null">temperature_side_image_url,</if>
+            <if test="temperatureBackImageUrl != null">temperature_back_image_url,</if>
+            <if test="creationDate != null">creation_date,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelId != null">#{modelId},</if>
+            <if test="gameId != null">#{gameId},</if>
+            <if test="frameRate != null">#{frameRate},</if>
+            <if test="powerConsumption != null">#{powerConsumption},</if>
+            <if test="frameRateImageUrl != null">#{frameRateImageUrl},</if>
+            <if test="temperatureFront != null">#{temperatureFront},</if>
+            <if test="temperatureSide != null">#{temperatureSide},</if>
+            <if test="temperatureBack != null">#{temperatureBack},</if>
+            <if test="powerConsumptionImageUrl != null">#{powerConsumptionImageUrl},</if>
+            <if test="temperatureFrontImageUrl != null">#{temperatureFrontImageUrl},</if>
+            <if test="temperatureSideImageUrl != null">#{temperatureSideImageUrl},</if>
+            <if test="temperatureBackImageUrl != null">#{temperatureBackImageUrl},</if>
+            <if test="creationDate != null">#{creationDate},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+        </trim>
+    </insert>
+
+    <update id="updateGameData" parameterType="com.ruoyi.system.domain.huaSheng.GameData">
+        update game_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelId != null">model_id = #{modelId},</if>
+            <if test="gameId != null">game_id = #{gameId},</if>
+            <if test="frameRate != null">frame_rate = #{frameRate},</if>
+            <if test="powerConsumption != null">power_consumption = #{powerConsumption},</if>
+            <if test="frameRateImageUrl != null">frame_rate_image_url = #{frameRateImageUrl},</if>
+            <if test="temperatureFront != null">temperature_front = #{temperatureFront},</if>
+            <if test="temperatureSide != null">temperature_side = #{temperatureSide},</if>
+            <if test="temperatureBack != null">temperature_back = #{temperatureBack},</if>
+            <if test="powerConsumptionImageUrl != null">power_consumption_image_url = #{powerConsumptionImageUrl},</if>
+            <if test="temperatureFrontImageUrl != null">temperature_front_image_url = #{temperatureFrontImageUrl},</if>
+            <if test="temperatureSideImageUrl != null">temperature_side_image_url = #{temperatureSideImageUrl},</if>
+            <if test="temperatureBackImageUrl != null">temperature_back_image_url = #{temperatureBackImageUrl},</if>
+            <if test="creationDate != null">creation_date = #{creationDate},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGameDataById" parameterType="Long">
+        delete from game_data where id = #{id}
+    </delete>
+
+    <delete id="deleteGameDataByIds" parameterType="String">
+        delete from game_data where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectGameInfoByMobileName" resultType="java.lang.Integer">
+        select count(*) from game_data t1
+        left join mobile_basic_data t2 on t1.model_id = t2.model_id
+        left join game_basic_info t3 on t1.game_id = t3.game_id
+        where t2.model_id=#{modelId}
+          and t3.game_id=#{gameId}
+    </select>
+
+
+</mapper>

@@ -49,6 +49,7 @@
         where model_id = #{modelId}
     </select>
 
+
     <insert id="insertMobileBasicData" parameterType="com.ruoyi.system.domain.huaSheng.MobileBasicData" useGeneratedKeys="true" keyProperty="modelId">
         insert into mobile_basic_data
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -113,4 +114,15 @@
             #{modelId}
         </foreach>
     </delete>
+
+    <select id="selectMobileInfoList" resultType="com.ruoyi.system.domain.reponse.MobileInfo">
+         select model_id as modelId,model_name as  modelName from mobile_basic_data
+        <where>
+        <if test="modelName != null  and modelName != ''">
+         and model_name like concat('%', #{modelName}, '%')
+        </if>
+        </where>
+         order by release_date desc
+    </select>
+
 </mapper>

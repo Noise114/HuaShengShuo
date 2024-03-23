@@ -34,4 +34,8 @@ public class EnduranceController extends BaseController {
         List<Statistics> list = enduranceService.selectEnduranceList(request);
         return getDataTable(list);
     }
+
+
+
+
 }

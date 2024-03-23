@@ -1,6 +1,7 @@
 package com.ruoyi.system.mapper;
 
 import com.ruoyi.system.domain.huaSheng.MobileBasicData;
+import com.ruoyi.system.domain.reponse.MobileInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -61,4 +62,11 @@ public interface MobileBasicDataMapper
      * @return 结果
      */
     public int deleteMobileBasicDataByModelIds(Long[] modelIds);
+
+    /**
+     * 查询手机基础信息
+     * @param mobile
+     * @return
+     */
+     List<MobileInfo> selectMobileInfoList(String modelName);
 }

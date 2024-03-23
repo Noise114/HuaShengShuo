@@ -1,11 +1,12 @@
-package com.ruoyi.system.domain.huaSheng;
+package com.ruoyi.system.domain.reponse;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.domain.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 【游戏数据】对象 game_data
@@ -13,9 +14,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author noise
  * @date 2024-03-18
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class GameData extends BaseEntity
+public class GameDataReponse
 {
     private static final long serialVersionUID = 1L;
 
@@ -23,16 +23,10 @@ public class GameData extends BaseEntity
     private Long id;
 
     /** 机型id */
-    private Long modelId;
+    private Long modelName;
 
     /** 游戏id */
-    private Long gameId;
-
-    /** 机型id */
-    private String modelName;
-
-    /** 游戏id */
-    private String gameName;
+    private Long gameName;
 
     /** 帧率 */
     private BigDecimal frameRate;
@@ -72,11 +66,5 @@ public class GameData extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateDate;
 
-    public String getGameName() {
-        return gameName;
-    }
 
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
-    }
 }

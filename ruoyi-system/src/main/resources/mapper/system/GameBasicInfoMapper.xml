@@ -29,6 +29,17 @@
         where game_id = #{gameId}
     </select>
 
+    <select id="selectGameInfo" resultType="com.ruoyi.system.domain.reponse.GameInfo">
+        select game_id as gameId, game_name as gameName
+        from game_basic_info
+        <where>
+            <if test="gameName != null  and gameName != ''">
+                and game_name like concat('%', #{gameName}, '%')
+            </if>
+        </where>
+        order by game_name
+    </select>
+
     <insert id="insertGameBasicInfo" parameterType="com.ruoyi.system.domain.huaSheng.GameBasicInfo">
         insert into game_basic_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 
 import com.ruoyi.system.domain.huaSheng.GameBasicInfo;
+import com.ruoyi.system.domain.reponse.GameInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -63,5 +64,7 @@ public interface GameBasicInfoMapper
      * @return 结果
      */
     public int deleteGameBasicInfoByGameIds(Long[] gameIds);
+
+    List<GameInfo> selectGameInfo(String gameName);
 }
 
