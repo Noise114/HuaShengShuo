@@ -12,6 +12,17 @@ import java.util.List;
  */
 public interface IEnduranceService
 {
+
+
+    /**
+     * 查询【续航数据】
+     *
+     * @param id 【续航数据】主键
+     * @return 【续航数据】
+     */
+    public Statistics selectStatisticsById(Long id);
+
+
     /**
      * 查询续航数据
      * 

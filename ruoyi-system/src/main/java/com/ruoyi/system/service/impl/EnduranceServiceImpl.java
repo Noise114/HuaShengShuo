@@ -27,6 +27,12 @@ public class EnduranceServiceImpl implements IEnduranceService
     @Autowired
     EnduranceMapper enduranceMapper;
 
+
+    @Override
+    public Statistics selectStatisticsById(Long id) {
+        return enduranceMapper.selectStatisticsById(id);
+    }
+
     /**
      * 查询耗电数据集合
      * 

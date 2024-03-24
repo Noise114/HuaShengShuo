@@ -14,20 +14,16 @@ public class Statistics  {
     private int id;
 
     /**
+     * 机型ID
+     */
+    private int brandId;
+    private int selectedModel;
+    /**
      * 机型名称
      */
     private String brandName;
 
-    /**
-     * 芯片名称
-     */
     private String chipName;
-
-    /**
-     * 芯片发布时间
-     */
-    private int chipTime;
-
     /**
      * 王者荣耀数值
      */

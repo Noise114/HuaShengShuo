@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="com.ruoyi.system.domain.Statistics" id="StatisticsResult">
 		<id     property="id"        column="id"       />
+		<result property="brandId"      column="brand_id"     />
 		<result property="brandName"      column="brand_name"     />
 		<result property="chipName"      column="chip_name"     />
-		<result property="chipTime"      column="chip_time"     />
 		<result property="aov"        column="aov"        />
 		<result property="gi"      column="gi"     />
 		<result property="camera"    column="camera"   />
@@ -23,28 +23,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 
-	<select id="selectEnduranceList" parameterType="com.ruoyi.system.domain.Statistics" resultMap="StatisticsResult">
-		select * from statistics
+	<select id="selectEnduranceList" parameterType="com.ruoyi.system.domain.Statistics" resultType="com.ruoyi.system.domain.Statistics">
+		select
+		t1.id,
+		t1.brand_id as brandId,
+		t1.aov,
+		t1.gi,
+		t1.camera,
+		t1.bilibili,
+		t1.standby,
+		t1.weibo,
+		t1.chicken,
+		t1.residue,
+		t1.phone_type as phoneType,
+		t1.create_time AS createTime,
+		t1.update_time AS updatetTime,
+		t1.create_by AS createBby,
+		t1.update_by AS updateBy,
+		t1.brand_id as selectedModel,
+		t2.model_name as brandName,
+		t2.processor_model as chipName
+		from statistics t1
+		left join mobile_basic_data t2 on t1.brand_id=t2.model_id
 		<where>
 			<if test="brandName != null and brandName != ''">
-				AND brand_name like concat('%', #{brandName}, '%')
+				AND t2.model_name like concat('%', #{brandName}, '%')
 			</if>
 			<if test="chipName != null and chipName != ''">
-				AND chip_name like concat('%', #{chipName}, '%')
+				AND t2.processor_model like concat('%', #{chipName}, '%')
 			</if>
 			<if test="phoneType != null and phoneType != ''">
-				AND phone_type = #{phoneType}
+				AND t1.phone_type = #{phoneType}
 			</if>
 		</where>
         order by residue desc
 	</select>
 
-	<insert id="insertStatistics" parameterType="com.ruoyi.system.domain.Statistics" useGeneratedKeys="true" keyProperty="id">
+    <select id="selectStatisticsById" resultType="com.ruoyi.system.domain.Statistics">
+		select
+			t1.id,
+			t1.brand_id as brandId,
+			t1.aov,
+			t1.gi,
+			t1.camera,
+			t1.bilibili,
+			t1.standby,
+			t1.weibo,
+			t1.chicken,
+			t1.residue,
+			t1.phone_type as phoneType,
+			t1.create_time AS createTime,
+			t1.update_time AS updatetTime,
+			t1.create_by AS createBby,
+			t1.update_by AS updateBy,
+			t1.brand_id as selectedModel,
+			t2.model_name as brandName,
+			t2.processor_model as chipName
+		from statistics t1
+		left join mobile_basic_data t2 on t1.brand_id=t2.model_id
+        where t1.id = #{id}
+	</select>
+
+    <insert id="insertStatistics" parameterType="com.ruoyi.system.domain.Statistics" useGeneratedKeys="true" keyProperty="id">
 		insert into statistics
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="brandName != null">brand_name,</if>
-			<if test="chipName != null">chip_name,</if>
-			<if test="chipTime != null">chip_time,</if>
+			<if test="selectedModel != null">brand_id,</if>
 			<if test="aov != null">aov,</if>
 			<if test="gi != null">gi,</if>
 			<if test="camera != null">camera,</if>
@@ -60,9 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateBy != null">update_by,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="brandName != null">#{brandName},</if>
-			<if test="chipName != null">#{chipName},</if>
-			<if test="chipTime != null">#{chipTime},</if>
+			<if test="selectedModel != null">#{selectedModel},</if>
 			<if test="aov != null">#{aov},</if>
 			<if test="gi != null">#{gi},</if>
 			<if test="camera != null">#{camera},</if>
@@ -82,9 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateStatistics" parameterType="com.ruoyi.system.domain.Statistics">
 		update statistics
 		<trim prefix="SET" suffixOverrides=",">
-			<if test="brandName != null">brand_name = #{brandName},</if>
-			<if test="chipName != null">chip_name = #{chipName},</if>
-			<if test="chipTime != null">chip_time = #{chipTime},</if>
+			<if test="selectedModel != null">brand_id = #{selectedModel},</if>
 			<if test="aov != null">aov = #{aov},</if>
 			<if test="gi != null">gi = #{gi},</if>
 			<if test="camera != null">camera = #{camera},</if>

@@ -1,9 +1,14 @@
 package com.ruoyi.web.controller.huasheng;
 
 
+import java.io.IOException;
 import java.util.List;
+
+import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.huaSheng.GameData;
+import com.ruoyi.system.domain.huaSheng.GamePictureRequest;
 import com.ruoyi.system.service.IGameDataService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +24,8 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.core.page.TableDataInfo;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 游戏性能Controller
@@ -88,4 +95,26 @@ public class GameDataController extends BaseController
     {
         return toAjax(gameDataService.deleteGameDataByIds(ids));
     }
+
+
+    @PreAuthorize("@ss.hasPermi('huasheng:game:query')")
+    @PostMapping ("/downLoadPicture")
+    public void downLoadPicture(HttpServletResponse response, @RequestBody GamePictureRequest request) throws IOException
+    {
+        byte[] bytes = gameDataService.downLoadPicture(response, request);
+        genCode(response,bytes);
+    }
+
+
+    private void genCode(HttpServletResponse response, byte[] data) throws IOException
+    {
+        response.reset();
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        response.setHeader("Content-Disposition", "attachment; filename=\"picture.zip\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.setContentType("application/zip");
+        IOUtils.write(data, response.getOutputStream());
+    }
+
 }

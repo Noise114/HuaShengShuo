@@ -2,7 +2,9 @@ package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.huaSheng.GameData;
+import com.ruoyi.system.domain.huaSheng.GamePictureRequest;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -61,5 +63,8 @@ public interface IGameDataService
      * @return 结果
      */
     public int deleteGameDataById(Long id);
+
+
+    byte[] downLoadPicture(HttpServletResponse response, GamePictureRequest request);
 }
 

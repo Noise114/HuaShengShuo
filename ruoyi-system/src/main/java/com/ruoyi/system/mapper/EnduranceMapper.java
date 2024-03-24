@@ -6,13 +6,22 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * 岗位信息 数据层
+ * 续航统计数据
  * 
  * @author ruoyi
  */
 @Mapper
 public interface EnduranceMapper
 {
+
+    /**
+     * 查询【续航统计数据】
+     *
+     * @param id 【续航统计数据】主键
+     * @return 【续航统计数据】
+     */
+     Statistics selectStatisticsById(Long id);
+
     /**
      * 查询岗位数据集合
      * 
