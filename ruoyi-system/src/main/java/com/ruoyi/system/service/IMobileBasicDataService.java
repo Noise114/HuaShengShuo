@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.huaSheng.MobileBasicData;
 
 /**
@@ -33,7 +35,7 @@ public interface IMobileBasicDataService
      * @param mobileBasicData 【手机基础信息】
      * @return 结果
      */
-    public int insertMobileBasicData(MobileBasicData mobileBasicData);
+    public AjaxResult insertMobileBasicData(MobileBasicData mobileBasicData);
 
     /**
      * 修改【手机基础信息】
@@ -49,7 +51,7 @@ public interface IMobileBasicDataService
      * @param modelIds 需要删除的【手机基础信息】主键集合
      * @return 结果
      */
-    public int deleteMobileBasicDataByModelIds(Long[] modelIds);
+    public AjaxResult deleteMobileBasicDataByModelIds(Long[] modelIds);
 
     /**
      * 删除【手机基础信息】信息

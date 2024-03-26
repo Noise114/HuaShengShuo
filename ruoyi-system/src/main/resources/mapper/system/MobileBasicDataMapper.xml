@@ -124,5 +124,8 @@
         </where>
          order by release_date desc
     </select>
+    <select id="selectByModelName" resultType="java.lang.Integer">
+        select count(1) from mobile_basic_data where model_name = #{modelName}
+    </select>
 
 </mapper>

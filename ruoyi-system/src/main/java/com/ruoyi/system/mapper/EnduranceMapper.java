@@ -61,4 +61,9 @@ public interface EnduranceMapper
      */
     public int deleteStatisticsByIds(Long[] ids);
 
+
+   int selectByBrandId(int brandId);
+
+   int  selectByBrandIds(Long[] ids);
+
 }

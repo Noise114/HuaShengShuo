@@ -65,7 +65,7 @@ public class GameBasicInfoController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody GameBasicInfo gameBasicInfo)
     {
-        return toAjax(gameBasicInfoService.insertGameBasicInfo(gameBasicInfo));
+        return gameBasicInfoService.insertGameBasicInfo(gameBasicInfo);
     }
 
     /**

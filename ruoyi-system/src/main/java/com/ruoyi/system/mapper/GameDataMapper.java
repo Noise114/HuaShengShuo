@@ -74,4 +74,6 @@ public interface GameDataMapper
      * @return
      */
     int selectGameInfoByMobileName(@Param("modelId") Long modelId, @Param("gameId")Long gameId);
+
+    int selectByModelIds(Long[] ids);
 }

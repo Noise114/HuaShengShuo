@@ -2,6 +2,8 @@ package com.ruoyi.system.service;
 
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.huaSheng.GameBasicInfo;
 
 /**
@@ -34,7 +36,7 @@ public interface IGameBasicInfoService
      * @param gameBasicInfo 【游戏基础数据】
      * @return 结果
      */
-    public int insertGameBasicInfo(GameBasicInfo gameBasicInfo);
+    public AjaxResult insertGameBasicInfo(GameBasicInfo gameBasicInfo);
 
     /**
      * 修改【游戏基础数据】

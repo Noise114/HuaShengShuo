@@ -1,5 +1,7 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.domain.huaSheng.GameBasicInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,9 +52,15 @@ public class GameBasicInfoServiceImpl implements IGameBasicInfoService
      * @return 结果
      */
     @Override
-    public int insertGameBasicInfo(GameBasicInfo gameBasicInfo)
+    public AjaxResult insertGameBasicInfo(GameBasicInfo gameBasicInfo)
     {
-        return gameBasicInfoMapper.insertGameBasicInfo(gameBasicInfo);
+        int res = gameBasicInfoMapper.selectByGameName(gameBasicInfo.getGameName());
+        if(res>0){
+            return AjaxResult.error("该游戏数据已存在,请勿重复录入");
+        }
+        gameBasicInfo.setCreateTime(DateUtils.getNowDate());
+        gameBasicInfoMapper.insertGameBasicInfo(gameBasicInfo);
+        return AjaxResult.success();
     }
 
     /**
@@ -64,6 +72,7 @@ public class GameBasicInfoServiceImpl implements IGameBasicInfoService
     @Override
     public int updateGameBasicInfo(GameBasicInfo gameBasicInfo)
     {
+        gameBasicInfo.setUpdateTime(DateUtils.getNowDate());
         return gameBasicInfoMapper.updateGameBasicInfo(gameBasicInfo);
     }
 

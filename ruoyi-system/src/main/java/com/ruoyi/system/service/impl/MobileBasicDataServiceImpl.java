@@ -2,8 +2,11 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.domain.huaSheng.MobileBasicData;
+import com.ruoyi.system.mapper.EnduranceMapper;
+import com.ruoyi.system.mapper.GameDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.MobileBasicDataMapper;
@@ -20,7 +23,10 @@ public class MobileBasicDataServiceImpl implements IMobileBasicDataService
 {
     @Autowired
     private MobileBasicDataMapper mobileBasicDataMapper;
-
+    @Autowired
+    private EnduranceMapper enduranceMapper;
+    @Autowired
+    private GameDataMapper gameDataMapper;
     /**
      * 查询【手机基础信息】
      *
@@ -52,10 +58,16 @@ public class MobileBasicDataServiceImpl implements IMobileBasicDataService
      * @return 结果
      */
     @Override
-    public int insertMobileBasicData(MobileBasicData mobileBasicData)
+    public AjaxResult insertMobileBasicData(MobileBasicData mobileBasicData)
     {
+        mobileBasicData.setModelName(mobileBasicData.getModelName().replace(" ",""));
+        int res = mobileBasicDataMapper.selectByModelName(mobileBasicData.getModelName());
+        if(res>0){
+            return AjaxResult.error("该手机基础信息已存在,请勿重复录入");
+        }
         mobileBasicData.setCreationDate(DateUtils.getNowDate());
-        return mobileBasicDataMapper.insertMobileBasicData(mobileBasicData);
+        mobileBasicDataMapper.insertMobileBasicData(mobileBasicData);
+        return AjaxResult.success();
     }
 
     /**
@@ -67,6 +79,7 @@ public class MobileBasicDataServiceImpl implements IMobileBasicDataService
     @Override
     public int updateMobileBasicData(MobileBasicData mobileBasicData)
     {
+        mobileBasicData.setUpdateDate(DateUtils.getNowDate());
         return mobileBasicDataMapper.updateMobileBasicData(mobileBasicData);
     }
 
@@ -77,9 +90,19 @@ public class MobileBasicDataServiceImpl implements IMobileBasicDataService
      * @return 结果
      */
     @Override
-    public int deleteMobileBasicDataByModelIds(Long[] modelIds)
+    public AjaxResult deleteMobileBasicDataByModelIds(Long[] modelIds)
     {
-        return mobileBasicDataMapper.deleteMobileBasicDataByModelIds(modelIds);
+        //查询手机数据是否绑定过
+        int enduranceIsExist=enduranceMapper.selectByBrandIds(modelIds);
+        if(enduranceIsExist>0){
+            return AjaxResult.error("该手机基础信息已绑定续航数据，请勿删除");
+        }
+        int gameIsExist=gameDataMapper.selectByModelIds(modelIds);
+        if(gameIsExist>0){
+            return AjaxResult.error("该手机基础信息已绑定游戏性能数据，请勿删除");
+        }
+        mobileBasicDataMapper.deleteMobileBasicDataByModelIds(modelIds);
+        return AjaxResult.success();
     }
 
     /**

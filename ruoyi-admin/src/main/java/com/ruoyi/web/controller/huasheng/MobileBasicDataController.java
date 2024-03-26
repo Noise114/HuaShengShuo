@@ -60,7 +60,7 @@ public class MobileBasicDataController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody MobileBasicData mobileBasicData)
     {
-        return toAjax(mobileBasicDataService.insertMobileBasicData(mobileBasicData));
+        return mobileBasicDataService.insertMobileBasicData(mobileBasicData);
     }
 
     /**
@@ -80,7 +80,7 @@ public class MobileBasicDataController extends BaseController
     @DeleteMapping("/{modelIds}")
     public AjaxResult remove(@PathVariable Long[] modelIds)
     {
-        return toAjax(mobileBasicDataService.deleteMobileBasicDataByModelIds(modelIds));
+        return mobileBasicDataService.deleteMobileBasicDataByModelIds(modelIds);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.Statistics;
 import com.ruoyi.system.domain.SysPost;
 
@@ -36,7 +37,7 @@ public interface IEnduranceService
      * @param statistics 【续航数据】
      * @return 结果
      */
-    public int insertStatistics(Statistics statistics);
+    public AjaxResult insertStatistics(Statistics statistics);
 
     /**
      * 修改【续航数据】

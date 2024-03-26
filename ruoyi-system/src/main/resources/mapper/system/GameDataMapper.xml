@@ -148,6 +148,13 @@
         where t2.model_id=#{modelId}
           and t3.game_id=#{gameId}
     </select>
+    <select id="selectByModelIds" resultType="java.lang.Integer">
+        select count(*) from game_data
+        where model_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
 
 </mapper>

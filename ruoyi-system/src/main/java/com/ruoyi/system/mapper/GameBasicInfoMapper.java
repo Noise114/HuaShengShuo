@@ -66,5 +66,7 @@ public interface GameBasicInfoMapper
     public int deleteGameBasicInfoByGameIds(Long[] gameIds);
 
     List<GameInfo> selectGameInfo(String gameName);
+
+    int selectByGameName(String gameName);
 }
 

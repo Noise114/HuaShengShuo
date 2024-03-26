@@ -51,7 +51,7 @@ public class EnduranceController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody Statistics statistics)
     {
-        return toAjax(enduranceService.insertStatistics(statistics));
+        return enduranceService.insertStatistics(statistics);
     }
 
     /**

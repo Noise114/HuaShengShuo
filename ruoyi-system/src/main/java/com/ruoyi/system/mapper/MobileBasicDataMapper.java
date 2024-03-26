@@ -69,4 +69,7 @@ public interface MobileBasicDataMapper
      * @return
      */
      List<MobileInfo> selectMobileInfoList(String modelName);
+
+    int selectByModelName(String modelName);
+
 }

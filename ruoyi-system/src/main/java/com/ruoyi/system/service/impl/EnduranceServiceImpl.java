@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -46,10 +47,14 @@ public class EnduranceServiceImpl implements IEnduranceService
     }
 
     @Override
-    public int insertStatistics(Statistics statistics) {
-
+    public AjaxResult insertStatistics(Statistics statistics) {
+        int res = enduranceMapper.selectByBrandId(statistics.getSelectedModel());
+        if(res>0){
+            return AjaxResult.error("该手机续航数据已存在,请勿重复录入");
+        }
         statistics.setCreateTime(DateUtils.getNowDate());
-        return enduranceMapper.insertStatistics(statistics);
+        enduranceMapper.insertStatistics(statistics);
+        return AjaxResult.success();
     }
 
     @Override

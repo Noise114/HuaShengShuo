@@ -83,6 +83,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		left join mobile_basic_data t2 on t1.brand_id=t2.model_id
         where t1.id = #{id}
 	</select>
+    <select id="selectByBrandId" resultType="java.lang.Integer">
+		select count(1) from statistics where brand_id = #{brandId}
+	</select>
+
+	<select id="selectByBrandIds" resultType="java.lang.Integer">
+		select count(1) from statistics where brand_id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
 
     <insert id="insertStatistics" parameterType="com.ruoyi.system.domain.Statistics" useGeneratedKeys="true" keyProperty="id">
 		insert into statistics

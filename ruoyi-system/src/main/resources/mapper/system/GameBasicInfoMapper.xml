@@ -39,6 +39,9 @@
         </where>
         order by game_name
     </select>
+    <select id="selectByGameName" resultType="java.lang.Integer">
+        select count(1) from game_basic_info where game_name = #{gameName}
+    </select>
 
     <insert id="insertGameBasicInfo" parameterType="com.ruoyi.system.domain.huaSheng.GameBasicInfo">
         insert into game_basic_info

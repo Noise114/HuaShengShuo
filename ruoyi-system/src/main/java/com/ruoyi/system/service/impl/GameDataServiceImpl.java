@@ -1,4 +1,4 @@
-package com.ruoyi.system.service;
+package com.ruoyi.system.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.system.domain.huaSheng.GameData;
 import com.ruoyi.system.domain.huaSheng.GamePictureRequest;
 import com.ruoyi.system.mapper.GameDataMapper;
+import com.ruoyi.system.service.IGameDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
